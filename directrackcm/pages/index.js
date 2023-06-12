@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import connectDB from "../db/db"
+import TestDB from './testdb';
+import ClientsPage from './clients';
 
-export default function Home() {
+const Home = () => {
+
   const { user, isLoading, error } = useUser();
   const router = useRouter();
+  
 
-  // Redirigir al usuario si no está autenticado
-  if (!user && !isLoading) {
+   // Redirigir al usuario si no está autenticado
+   if (!user && !isLoading) {
     router.push('/api/auth/login');
     return null;
   }
@@ -19,22 +24,38 @@ export default function Home() {
     return null;
   }
 
+  const handleTestDB =  () => {
+    //await connectDB(); // Realizar conexión a la base de datos
+    router.push('/testdb'); // Redirigir después de la conexión exitosa
+  };
+
   return (
     <>
       <h1>Página de inicio</h1>
-      <div>
-        {!!user ? (
-          <>
-            <div>¡Bienvenido, {user.name}!</div>
-            <Link href="/api/auth/logout">Logout</Link>
-          </>
-        ) : (
-          <Link href="/api/auth/login">Login</Link>
-        )}
-      </div>
-    </>
+      
+              {!!user ? (
+
+              <>
+
+                    {/* <div>
+                      <button onClick={handleTestDB}>TEST DB</button>
+                    </div> */}
+                    <ClientsPage user={user} />
+
+              </>
+
+
+
+
+
+              ) : (<Link href="/api/auth/login">Login</Link>)}
+
+
+              {/* <Link href="/testdb">TEST DB</Link> */}
+
+  </>
   );
 }
 
 
-//export const getServerSideProps = withPageAuthRequired();
+export default Home
