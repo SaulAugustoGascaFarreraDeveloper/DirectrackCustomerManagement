@@ -41,16 +41,18 @@ function ClientsPage({ user }) {
     <>
       {!!user ? (
         <>
-          <Link href="/api/auth/logout">Logout</Link>
+          {/* <Link style={{color:'black'}} href="/api/auth/logout">Logout</Link>
           <div>
             {conexion ? (
               <div>CONEXION EXITOSA</div>
             ) : (
               <div>CONEXION FALLIDA</div>
             )}
-          </div>
+          </div> */}
 
-              <PersistentDrawerLeft />
+          <PersistentDrawerLeft/>
+
+             
 
         </>
       ) : (

@@ -1,11 +1,14 @@
+import { ThemeProvider } from '@mui/material'
 import '../styles/globals.css'
 import {UserProvider} from '@auth0/nextjs-auth0/client'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <UserProvider>
+   
+        <UserProvider>
         <Component {...pageProps} />
-    </UserProvider>
+        </UserProvider>
+    
   
   )
 }

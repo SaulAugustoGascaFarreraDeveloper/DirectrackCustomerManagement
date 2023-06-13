@@ -21,7 +21,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import { red } from '@mui/material/colors';
 import TableWithPagination from '../app/clientDataTable';
 import FormularioCliente from '../app/insertClient';
-
+import Link from 'next/link';
+import PropTypes from 'prop-types';
 
 const drawerWidth = 240;
 
@@ -69,6 +70,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
+
+
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
@@ -123,41 +126,42 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{color:'white'}}>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton >
-                <ListItemIcon sx={{color:'white'}}>
+        <List sx={{ color: 'white' }}>
+        {[
+          { text: 'Agregar Clientes', url: '/clients' },
+          { text: 'Ver Clientes', url: '/getClients' },
+          { text: 'Send email', url: '/emailTest' },
+          { text: 'Twilio Test', url: '/whatsAppTest' },
+          { text: 'Logout', url: '/api/auth/logout' },
+        ].map((item, index) => (
+          <ListItem key={item.text} disablePadding>
+            <Link href={item.url} passHref>
+              <ListItemButton component="a">
+                <ListItemIcon sx={{ color: 'white' }}>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={item.text} />
               </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+            </Link>
+          </ListItem>
+        ))}
+      </List>
         <Divider />
-        <List sx={{color:'white'}}>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon sx={{color:'white'}}>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+       
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
 
         
-            <FormularioCliente />
-        
+        <FormularioCliente /> 
+       
 
             
       </Main>
     </Box>
   );
 }
+
+PersistentDrawerLeft.propTypes = {
+  children: PropTypes.node,
+};
